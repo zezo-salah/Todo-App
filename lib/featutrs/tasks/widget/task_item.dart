@@ -80,11 +80,9 @@ class TaskItem extends StatelessWidget {
             child: InkWell(
                 onTap: () {},
                 child: const Icon(
-
                   Icons.check_rounded,
                   color: Colors.white,
                   size: 30,
-
                 )),
           )
         ],

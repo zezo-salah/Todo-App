@@ -10,14 +10,13 @@ class SettingProvider extends ChangeNotifier {
   ];
   int currentIndex=0;
 
-  ThemeMode currentTheme = ThemeMode.dark;
+  ThemeMode currentTheme = ThemeMode.light;
 
   ChangeTheme (ThemeMode newTheme){
     if(currentTheme==newTheme)return;
 
     currentTheme=newTheme;
     notifyListeners();
-
   }
 
 
