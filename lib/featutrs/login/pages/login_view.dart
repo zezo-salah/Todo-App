@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app_app/core/network_layer/firebase_utils.dart';
+import 'package:todo_app_app/core/services/snack_bar_service.dart';
 import 'package:todo_app_app/core/widget/custom_text_field.dart';
+import 'package:todo_app_app/featutrs/layout_view.dart';
 import 'package:todo_app_app/featutrs/register/pages/RegisterView.dart';
 import 'package:todo_app_app/featutrs/setting_provider.dart';
 
@@ -42,89 +45,88 @@ class LoginView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: mediaQuery.height * 0.18),
-                  vm.isDark() ?  const Text(
-                    "Welcome back!",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ) :
-                  const Text(
-                    "Welcome back!",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
+                  vm.isDark()
+                      ? const Text(
+                          "Welcome back!",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "Welcome back!",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                   const SizedBox(height: 40),
-                  vm.isDark()?
-                  const Text(
-                    "E-mail",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ):
-                  const Text(
-                    "E-mail",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
+                  vm.isDark()
+                      ? const Text(
+                          "E-mail",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "E-mail",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     hint: "Enter your e-mail address",
                     hintColor: Colors.grey.shade700,
-              
                     suffixWidget: const Icon(Icons.email_rounded),
                     onValidate: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "you must enter your e-mail address";
                       }
-              
+
                       return null;
                     },
                   ),
                   const SizedBox(height: 30),
-                  vm.isDark()?
-                  const Text(
-                    "Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  ):
-                  const Text(
-                    "Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
+                  vm.isDark()
+                      ? const Text(
+                          "Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: passwordController,
                     isPassword: true,
                     maxLines: 1,
                     hint: "Enter your password",
                     hintColor: Colors.grey.shade700,
-              
                     onValidate: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "you must enter password";
                       }
-              
+
                       return null;
                     },
                   ),
@@ -140,7 +142,20 @@ class LoginView extends StatelessWidget {
                     ),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        print("Logged in successfully");
+                        FirebaseUtils()
+                            .signIN(
+                                emailController.text, passwordController.text)
+                            .then((value) {
+                          if (value) {
+                            SnackBarService.showSuccessMessage(
+                                "Your logged in successfully");
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              LayoutView.routeName,
+                              (route) => false,
+                            );
+                          }
+                        });
                       }
                     },
                     child: const Row(
@@ -164,25 +179,23 @@ class LoginView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      vm.isDark() ?
-                  const Text(
-                    "OR",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        fontFamily: "Pop",
-                        color: Colors.white),
-                  )
-                          :
-                      const Text(
-                        "OR",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            fontFamily: "Pop",
-                            color: Colors.black),
-                      ),
-              
+                      vm.isDark()
+                          ? const Text(
+                              "OR",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                  fontFamily: "Pop",
+                                  color: Colors.white),
+                            )
+                          : const Text(
+                              "OR",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                  fontFamily: "Pop",
+                                  color: Colors.black),
+                            ),
                       const SizedBox(width: 10),
                       TextButton(
                         onPressed: () {
@@ -191,28 +204,26 @@ class LoginView extends StatelessWidget {
                             RegisterView.routeName,
                           );
                         },
-                        child:  vm.isDark() ?
-                        const Text(
-                          "Create new account !",
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              fontFamily: "Pop",
-                              color: Colors.white),
-                        )
-                            :
-                        const Text(
-                          "Create new account !",
-                          style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              fontFamily: "Pop",
-                              color: Colors.black),
-                        ),
-              
+                        child: vm.isDark()
+                            ? const Text(
+                                "Create new account !",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    fontFamily: "Pop",
+                                    color: Colors.white),
+                              )
+                            : const Text(
+                                "Create new account !",
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    fontFamily: "Pop",
+                                    color: Colors.black),
+                              ),
                       ),
                     ],
                   ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app_app/core/network_layer/firebase_utils.dart';
+import 'package:todo_app_app/core/services/snack_bar_service.dart';
 import 'package:todo_app_app/core/widget/custom_text_field.dart';
+import 'package:todo_app_app/featutrs/login/pages/login_view.dart';
 import 'package:todo_app_app/featutrs/setting_provider.dart';
 
 class RegisterView extends StatelessWidget {
@@ -13,7 +16,7 @@ class RegisterView extends StatelessWidget {
     var mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
 
-    var formkey =GlobalKey<FormState>();
+    var formkey = GlobalKey<FormState>();
     var nameController = TextEditingController();
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
@@ -42,27 +45,25 @@ class RegisterView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: mediaQuery.height * 0.15),
-                  vm.isDark() ?
-                  const Text(
-                    "Full Name",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  )
-                      :
-                  const Text(
-                    "Full Name",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-
+                  vm.isDark()
+                      ? const Text(
+                          "Full Name",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "Full Name",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: nameController,
                     keyboardType: TextInputType.name,
@@ -78,35 +79,32 @@ class RegisterView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 25),
-                  vm.isDark() ?
-                  const Text(
-                    "E-mail",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  )
-                      :
-                  const Text(
-                    "E-mail",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-
+                  vm.isDark()
+                      ? const Text(
+                          "E-mail",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "E-mail",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     hint: "Enter your e-mail address",
                     hintColor: Colors.grey.shade700,
-
                     suffixWidget: const Icon(Icons.email_rounded),
-                    onValidate:  (value) {
+                    onValidate: (value) {
                       print(value);
                       if (value == null || value.trim().isEmpty) {
                         return "you must enter your Email";
@@ -121,37 +119,33 @@ class RegisterView extends StatelessWidget {
 
                       return null;
                     },
-
                   ),
                   const SizedBox(height: 25),
-                  vm.isDark() ?
-                  const Text(
-                    "Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  )
-                      :
-                  const Text(
-                    "Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-
+                  vm.isDark()
+                      ? const Text(
+                          "Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: passwordController,
                     isPassword: true,
                     maxLines: 1,
                     hint: "Enter your password",
                     hintColor: Colors.grey.shade700,
-
                     onValidate: (value) {
                       if (value == null || value.trim().isEmpty) {
                         return "you must enter your password !";
@@ -168,27 +162,25 @@ class RegisterView extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 25),
-                  vm.isDark() ?
-                  const Text(
-                    "Confirm Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  )
-                      :
-                  const Text(
-                    "Confirm Password",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: "Pop",
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-
+                  vm.isDark()
+                      ? const Text(
+                          "Confirm Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )
+                      : const Text(
+                          "Confirm Password",
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Pop",
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                   CustomTextField(
                     controller: confirmPasswordController,
                     isPassword: true,
@@ -218,9 +210,24 @@ class RegisterView extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                     if(formkey.currentState!.validate()){
-                       print("login validate");
-                     }
+                      if (formkey.currentState!.validate()) {
+                        FirebaseUtils()
+                            .createNewAccount(
+                          emailController.text,
+                          passwordController.text,
+                        )
+                            .then((value) {
+                          if (value == true) {
+                            SnackBarService.showSuccessMessage(
+                                "Account successfully created");
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              LoginView.routeName,
+                              (route) => false,
+                            );
+                          }
+                        });
+                      }
                     },
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,7 +247,6 @@ class RegisterView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 40),
-
                 ],
               ),
             ),

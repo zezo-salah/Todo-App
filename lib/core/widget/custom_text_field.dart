@@ -129,7 +129,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.grey.shade400,
-            width: 1,
+            width: 2,
           ),
         ),
         errorStyle: const TextStyle(color: Colors.deepOrangeAccent, fontWeight: FontWeight.w400,),
@@ -138,7 +138,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(
             color: Colors.deepOrangeAccent,
-            width: 1,
+            width: 2,
           ),
         ),
       ),
