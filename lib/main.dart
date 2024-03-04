@@ -10,6 +10,7 @@ import 'package:todo_app_app/featutrs/login/pages/login_view.dart';
 import 'package:todo_app_app/featutrs/register/pages/RegisterView.dart';
 import 'package:todo_app_app/featutrs/setting_provider.dart';
 import 'package:todo_app_app/featutrs/splash/pages/splash_view.dart';
+
 import 'firebase_options.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -47,8 +48,8 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       routes: {
         SplashView.routeName: (context) => const SplashView(),
-        LoginView.routeName: (context) => LoginView(),
-        RegisterView.routeName: (context) => RegisterView(),
+        LoginView.routeName: (context) => const LoginView(),
+        RegisterView.routeName: (context) => const RegisterView(),
         LayoutView.routeName: (context) => const LayoutView(),
       },
       navigatorObservers: [BotToastNavigatorObserver()],

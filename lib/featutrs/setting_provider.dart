@@ -5,7 +5,7 @@ import 'package:todo_app_app/featutrs/tasks/pages/Tasks.dart';
 class SettingProvider extends ChangeNotifier {
 
   List<Widget> screen= [
-    TasksView(),
+    const TasksView(),
     SettingView(),
   ];
   int currentIndex=0;

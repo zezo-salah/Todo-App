@@ -3,7 +3,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app_app/core/config/constants.dart';
 import 'package:todo_app_app/core/network_layer/firebase_utils.dart';
 import 'package:todo_app_app/core/services/snack_bar_service.dart';
 import 'package:todo_app_app/featutrs/setting_provider.dart';
@@ -87,11 +86,11 @@ class TaskItemWidget extends StatelessWidget {
                                 // fontSize: 12
                               )
                             : taskModel.isDone
-                                ? TextStyle(
+                                ? const TextStyle(
                                     color: Colors.green,
                                     fontWeight: FontWeight.bold,
                                   )
-                                : TextStyle(
+                                : const TextStyle(
                                     color: Color(0xFF5D9CEC),
                                     fontWeight: FontWeight.bold,
                                   )),

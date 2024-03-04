@@ -38,7 +38,7 @@ class LayoutView extends StatelessWidget {
             context: context,
             isDismissible: true,
             backgroundColor: Colors.transparent,
-            builder: (context) => TaskBottomSheet(),
+            builder: (context) => const TaskBottomSheet(),
           );
         },
         child: const Icon(

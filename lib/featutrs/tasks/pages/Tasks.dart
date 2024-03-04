@@ -114,7 +114,7 @@ class _TasksViewState extends State<TasksView> {
                         borderRadius: BorderRadius.circular(10),
                         color: vm.isDark()
                             ? const Color(0xCD141922)
-                            : Color(0xDAFFFFFF),
+                            : const Color(0xDAFFFFFF),
                       )),
                   inactiveDayStyle: DayStyle(
                       dayStrStyle: TextStyle(
@@ -166,7 +166,7 @@ class _TasksViewState extends State<TasksView> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Icon(Icons.refresh,color:vm.isDark()?
                   Colors.white     :Colors.black ,),
                 ],
