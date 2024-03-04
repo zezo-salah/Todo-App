@@ -1,13 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:todo_app_app/core/services/snack_bar_service.dart';
-
+import 'package:todo_app_app/core/utils/extract_date_time.dart';
+import 'package:todo_app_app/models/task_model.dart';
 class FirebaseUtils {
+
   Future<bool> createNewAccount(String emailAddress, String password) async {
     try {
       EasyLoading.show();
       final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
@@ -54,4 +57,71 @@ class FirebaseUtils {
       return Future.value(false);
     }
   }
+
+  CollectionReference<TaskModel> getCollectionReference() {
+    return FirebaseFirestore.instance
+        .collection(TaskModel.collectionName)
+        .withConverter<TaskModel>(
+      fromFirestore: (snapshot, _) =>
+          TaskModel.fromFirestore(snapshot.data()!),
+      toFirestore: (value, _) => value.toFirestore(),
+    );
+  }
+
+  Future<void> addNewTask(TaskModel taskModel) {
+    var collectionRef = getCollectionReference();
+    var docRef = collectionRef.doc();
+
+    taskModel.id = docRef.id;
+    return docRef.set(taskModel);
+  }
+
+  editTask(TaskModel taskModel) {
+    var collection = FirebaseFirestore.instance.collection('TasksList');
+    collection
+        .doc(taskModel.id) // <-- Doc ID where data should be updated.
+        .update({
+      "title":taskModel.title,
+      "description":taskModel.description,
+      "dateTime":taskModel.dateTime.millisecondsSinceEpoch,
+      "id":taskModel.id,
+    });
+  }
+
+  Future<List<TaskModel>> getDataFromFireStore(DateTime dateTime) async {
+    var collectionRef = getCollectionReference().where(
+      "dateTime",
+      isEqualTo: extractDateTime(dateTime).millisecondsSinceEpoch,
+    );
+    var data = await collectionRef.get();
+
+    var tasksList = data.docs.map((e) => e.data()).toList();
+
+    return tasksList;
+  }
+
+  Stream<QuerySnapshot<TaskModel>> getStreamDataFromFireStore(
+      DateTime dateTime) {
+    var collectionRef = getCollectionReference().where(
+      "dateTime",
+      isEqualTo: extractDateTime(dateTime).millisecondsSinceEpoch,
+    );
+    var data = collectionRef.snapshots();
+    return data;
+  }
+
+  Future<void> deleteTask(TaskModel taskModel) {
+    var collectionRef = getCollectionReference();
+    var docRef = collectionRef.doc(taskModel.id);
+    return docRef.delete();
+  }
+
+  Future<void> updateTask(TaskModel taskModel) {
+    var collectionRef = getCollectionReference();
+    var docRef = collectionRef.doc(taskModel.id);
+    return docRef.update({
+      "isDone": true,
+    });
+  }
+
 }

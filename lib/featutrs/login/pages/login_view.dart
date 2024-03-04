@@ -143,8 +143,7 @@ class LoginView extends StatelessWidget {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         FirebaseUtils()
-                            .signIN(
-                                emailController.text, passwordController.text)
+                            .signIN(emailController.text, passwordController.text)
                             .then((value) {
                           if (value) {
                             SnackBarService.showSuccessMessage(
@@ -152,7 +151,7 @@ class LoginView extends StatelessWidget {
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               LayoutView.routeName,
-                              (route) => false,
+                                  (route) => false,
                             );
                           }
                         });

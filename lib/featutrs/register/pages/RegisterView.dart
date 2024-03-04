@@ -223,7 +223,7 @@ class RegisterView extends StatelessWidget {
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               LoginView.routeName,
-                              (route) => false,
+                                  (route) => false,
                             );
                           }
                         });
